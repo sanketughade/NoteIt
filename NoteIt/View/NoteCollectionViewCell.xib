@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="noteCard" id="gTV-IL-0wX" customClass="NoteCollectionViewCell" customModule="NoteIt" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ASl-kF-HIJ">
+                        <rect key="frame" x="12" y="8" width="126" height="20"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Body" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LkP-og-RRw">
+                        <rect key="frame" x="12" y="32" width="126" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LzM-an-a2j">
+                        <rect key="frame" x="12" y="57" width="126" height="85"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="LkP-og-RRw" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="12" id="0lw-Ta-TPw"/>
+                <constraint firstItem="LzM-an-a2j" firstAttribute="top" secondItem="LkP-og-RRw" secondAttribute="bottom" constant="4" id="Cgf-QO-awT"/>
+                <constraint firstItem="LzM-an-a2j" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="12" id="FTk-Tn-241"/>
+                <constraint firstAttribute="bottom" secondItem="LzM-an-a2j" secondAttribute="bottom" constant="8" id="Fsm-BM-2it"/>
+                <constraint firstItem="ASl-kF-HIJ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="RGJ-g2-omv"/>
+                <constraint firstAttribute="trailing" secondItem="LzM-an-a2j" secondAttribute="trailing" constant="12" id="kPM-fJ-nwy"/>
+                <constraint firstAttribute="trailing" secondItem="LkP-og-RRw" secondAttribute="trailing" constant="12" id="mzu-he-35h"/>
+                <constraint firstItem="ASl-kF-HIJ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="12" id="nmr-1i-ZU3"/>
+                <constraint firstItem="LkP-og-RRw" firstAttribute="top" secondItem="ASl-kF-HIJ" secondAttribute="bottom" constant="4" id="roX-Ll-CJI"/>
+                <constraint firstAttribute="trailing" secondItem="ASl-kF-HIJ" secondAttribute="trailing" constant="12" id="yC5-EV-Khp"/>
+            </constraints>
+            <connections>
+                <outlet property="bodyLabel" destination="LkP-og-RRw" id="l5p-Mk-IVC"/>
+                <outlet property="dateLabel" destination="LzM-an-a2j" id="xBT-jd-lkM"/>
+                <outlet property="titleLabel" destination="ASl-kF-HIJ" id="rej-SJ-RTm"/>
+            </connections>
+            <point key="canvasLocation" x="120.61068702290076" y="-11.267605633802818"/>
+        </collectionViewCell>
+    </objects>
+</document>
