@@ -22,14 +22,14 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Body" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LkP-og-RRw">
-                        <rect key="frame" x="12" y="32" width="126" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Body" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LkP-og-RRw">
+                        <rect key="frame" x="12" y="36" width="126" height="20.333333333333329"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LzM-an-a2j">
-                        <rect key="frame" x="12" y="57" width="126" height="85"/>
+                        <rect key="frame" x="12" y="60.333333333333336" width="126" height="81.666666666666657"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -46,7 +46,7 @@
                 <constraint firstAttribute="trailing" secondItem="LzM-an-a2j" secondAttribute="trailing" constant="12" id="kPM-fJ-nwy"/>
                 <constraint firstAttribute="trailing" secondItem="LkP-og-RRw" secondAttribute="trailing" constant="12" id="mzu-he-35h"/>
                 <constraint firstItem="ASl-kF-HIJ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="12" id="nmr-1i-ZU3"/>
-                <constraint firstItem="LkP-og-RRw" firstAttribute="top" secondItem="ASl-kF-HIJ" secondAttribute="bottom" constant="4" id="roX-Ll-CJI"/>
+                <constraint firstItem="LkP-og-RRw" firstAttribute="top" secondItem="ASl-kF-HIJ" secondAttribute="bottom" constant="8" id="roX-Ll-CJI"/>
                 <constraint firstAttribute="trailing" secondItem="ASl-kF-HIJ" secondAttribute="trailing" constant="12" id="yC5-EV-Khp"/>
             </constraints>
             <connections>

@@ -35,7 +35,7 @@ class NoteCollectionViewCell: UICollectionViewCell {
         
         //bodyLabel styles
         bodyLabel.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        bodyLabel.numberOfLines = 2
+        bodyLabel.numberOfLines = 3
         bodyLabel.textColor = .darkGray
         bodyLabel.lineBreakMode = .byTruncatingTail
         
