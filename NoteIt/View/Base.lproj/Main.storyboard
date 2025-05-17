@@ -47,6 +47,17 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lhd-FH-NoI">
+                                <rect key="frame" x="313" y="738" width="56" height="56"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="56" id="FpA-Pz-OA8"/>
+                                    <constraint firstAttribute="height" constant="56" id="iRf-lu-Ldf"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -58,10 +69,13 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Yis-BM-TZl" secondAttribute="bottom" id="jDz-9D-NE1"/>
                             <constraint firstItem="Yis-BM-TZl" firstAttribute="top" secondItem="teJ-y4-fWB" secondAttribute="bottom" id="lQ4-ec-McC"/>
                             <constraint firstItem="teJ-y4-fWB" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="lbN-hs-lJp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="lhd-FH-NoI" secondAttribute="trailing" constant="24" id="tuj-uL-X0B"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="lhd-FH-NoI" secondAttribute="bottom" constant="24" id="v2L-sW-Znw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="NoteIt" id="2Rt-pT-Cmk"/>
                     <connections>
+                        <outlet property="addNoteButton" destination="lhd-FH-NoI" id="MyB-GN-b2N"/>
                         <outlet property="collectionView" destination="Yis-BM-TZl" id="xk3-j0-GWJ"/>
                     </connections>
                 </viewController>
@@ -89,6 +103,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

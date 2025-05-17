@@ -9,6 +9,7 @@ import UIKit
 
 class NotesListViewController: UIViewController, UICollectionViewDelegate {
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var addNoteButton: UIButton!
     
     
     //Temporary hardcoded notes
@@ -66,6 +67,10 @@ class NotesListViewController: UIViewController, UICollectionViewDelegate {
         
         // The below code will disable automatic sizing
         (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.estimatedItemSize = .zero
+        
+        //Style the Add Note("+") button
+        addNoteButton.layer.cornerRadius = 25
+        addNoteButton.clipsToBounds = true
     }
     
     func truncated(_ text: String, maxLength: Int) -> String {
