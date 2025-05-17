@@ -7,13 +7,13 @@
 
 import UIKit
 
-class NotesListViewController: UIViewController, UICollectionViewDelegate {
+class NotesListViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var addNoteButton: UIButton!
     
     
     //Temporary hardcoded notes
-    let notes: [Note] = [
+    var notes: [Note] = [
         Note(title: "Buy groceries",
              body: "Milk, Eggs, Bread, Butter, Fruits, and Vegetables.",
              date: Date().addingTimeInterval(-3600)),
@@ -131,6 +131,20 @@ extension NotesListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    }
+}
+
+//MARK: - UICollectionViewDelegate
+extension NotesListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: indexPath as NSCopying, previewProvider: nil) { _ in
+            let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
+                self.notes.remove(at: indexPath.item)
+                collectionView.deleteItems(at: [indexPath])
+            }
+            
+            return UIMenu(title: "", children: [delete])
+        }
     }
 }
 
