@@ -37,6 +37,7 @@ class NoteDetailViewController: UIViewController {
         
         if fullText == "" {
             navigationController?.popViewController(animated: true)
+            return
         }
         
         let extractedTitleAndBody: (title: String, body: String) = extractTitleAndBody()
@@ -53,7 +54,6 @@ class NoteDetailViewController: UIViewController {
         } catch {
             print("There was an error saving the note \(error)")
         }
-        
     }
     
     func extractTitleAndBody() -> (title: String, body: String) {
