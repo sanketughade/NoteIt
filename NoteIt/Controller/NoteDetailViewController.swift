@@ -32,6 +32,14 @@ class NoteDetailViewController: UIViewController {
         ]
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.textView.becomeFirstResponder()
+        }
+    }
+    
     @IBAction func saveNotePressed(_ sender: UIBarButtonItem) {
         let fullText = textView.text ?? ""
         
