@@ -14,11 +14,13 @@ protocol NoteDetailViewControllerDelegate {
 
 class NoteDetailViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
+    
     var context: NSManagedObjectContext!
     
     var delegate: NoteDetailViewControllerDelegate?
     
     private var isEditingBody = false
+    private var isNoteEdited = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +42,37 @@ class NoteDetailViewController: UIViewController {
         }
     }
     
+    @IBAction func backBarButtonPressed(_ sender: UIBarButtonItem) {
+        if !isNoteEdited {
+            //User has not edited the note and directly clicked back button
+            //As there are no changes in the note there is no need to show alert message
+            navigationController?.popViewController(animated: true)
+            return
+        }
+        
+        let alert = UIAlertController(
+            title: "Unsaved Changes",
+            message: "Do you want to save the changes before leaving?",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "No", style: .destructive){_ in
+            self.navigationController?.popViewController(animated: true)
+        })
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default) {_ in
+            self.saveNote()
+            self.navigationController?.popViewController(animated: true)
+        })
+        
+        present(alert, animated: true)
+    }
+    
     @IBAction func saveNotePressed(_ sender: UIBarButtonItem) {
+        saveNote()
+    }
+    
+    func saveNote() {
         let fullText = textView.text ?? ""
         
         if fullText == "" {
@@ -64,6 +96,7 @@ class NoteDetailViewController: UIViewController {
         }
     }
     
+    
     func extractTitleAndBody() -> (title: String, body: String) {
         let fullText = textView.text ?? ""
         
@@ -83,6 +116,8 @@ class NoteDetailViewController: UIViewController {
 extension NoteDetailViewController: UITextViewDelegate {
     //When user types
     func textViewDidChange(_ textView: UITextView) {
+        //User typed something, so make isNoteEdited true
+        isNoteEdited = true
         //Detect current cusrosr line
         let cursorlocation = textView.selectedRange.location
         let text = textView.text as NSString? ?? ""

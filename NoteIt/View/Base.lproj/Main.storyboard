@@ -121,6 +121,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jm4-aI-LnA">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="chevron.left" catalog="system" id="ZDB-jN-93j">
+                            <connections>
+                                <action selector="backBarButtonPressed:" destination="JS3-oc-26h" id="LZ4-hF-pzm"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Save" id="6S3-0T-fei">
                             <connections>
                                 <action selector="saveNotePressed:" destination="JS3-oc-26h" id="di6-ry-imm"/>
@@ -132,6 +137,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d9I-8I-Do7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <barButtonItem title="Item" id="qoI-DZ-Imd"/>
             </objects>
             <point key="canvasLocation" x="1835" y="-18"/>
         </scene>
@@ -155,6 +161,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
