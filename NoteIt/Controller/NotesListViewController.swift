@@ -148,10 +148,26 @@ extension NotesListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: indexPath as NSCopying, previewProvider: nil) { _ in
             let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
-                self.notes.remove(at: indexPath.item)
-                collectionView.deleteItems(at: [indexPath])
+                let noteToDelete = self.notes[indexPath.item]
+                
+                //1. Delete from Core Data context
+                if let context = noteToDelete.managedObjectContext {
+                    context.delete(noteToDelete)
+                    do {
+                        //2. Save the context
+                        try context.save()
+                        
+                        //3.Remove from data source
+                        self.notes.remove(at: indexPath.item)
+                        
+                        //4. Delete from collection view
+                        collectionView.deleteItems(at: [indexPath])
+                        self.updateEmptyMessage()
+                    } catch {
+                        print("Failed to delete note: \(error.localizedDescription)")
+                    }
+                }
             }
-            
             return UIMenu(title: "", children: [delete])
         }
     }
