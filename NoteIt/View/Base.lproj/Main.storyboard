@@ -36,6 +36,13 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
+                                <label key="backgroundView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No notes yet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nhy-vb-tEu">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="671"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                    <color key="textColor" red="0.82745098039999998" green="0.82745098039999998" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="EVv-LS-n3q">
                                         <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
@@ -57,6 +64,9 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system"/>
+                                <connections>
+                                    <action selector="onAddNotePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AWc-5Y-GRW"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -77,11 +87,53 @@
                     <connections>
                         <outlet property="addNoteButton" destination="lhd-FH-NoI" id="MyB-GN-b2N"/>
                         <outlet property="collectionView" destination="Yis-BM-TZl" id="xk3-j0-GWJ"/>
+                        <outlet property="emptyMessageLabel" destination="nhy-vb-tEu" id="NdI-HC-csJ"/>
+                        <segue destination="JS3-oc-26h" kind="show" identifier="goToNote" id="3wP-W9-Fs8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1054.1984732824426" y="-34.507042253521128"/>
+        </scene>
+        <!--Note Detail View Controller-->
+        <scene sceneID="vv5-Pk-THG">
+            <objects>
+                <viewController id="JS3-oc-26h" customClass="NoteDetailViewController" customModule="NoteIt" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9L6-g8-Hmj">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="bg6-dv-heT">
+                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="M1q-Dd-MRn"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="bg6-dv-heT" firstAttribute="top" secondItem="M1q-Dd-MRn" secondAttribute="top" id="32f-Oc-8zA"/>
+                            <constraint firstItem="bg6-dv-heT" firstAttribute="leading" secondItem="M1q-Dd-MRn" secondAttribute="leading" id="5Ln-5Y-I18"/>
+                            <constraint firstItem="M1q-Dd-MRn" firstAttribute="bottom" secondItem="bg6-dv-heT" secondAttribute="bottom" id="Zsh-8I-3RA"/>
+                            <constraint firstItem="M1q-Dd-MRn" firstAttribute="trailing" secondItem="bg6-dv-heT" secondAttribute="trailing" id="b4Q-nv-sNx"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="jm4-aI-LnA">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="6S3-0T-fei">
+                            <connections>
+                                <action selector="saveNotePressed:" destination="JS3-oc-26h" id="di6-ry-imm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="textView" destination="bg6-dv-heT" id="DEq-Qv-GJf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d9I-8I-Do7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1835" y="-18"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="deM-De-xVc">
@@ -104,6 +156,9 @@
     </scenes>
     <resources>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

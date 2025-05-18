@@ -6,57 +6,24 @@
 //
 
 import UIKit
+import CoreData
 
 class NotesListViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var addNoteButton: UIButton!
+    @IBOutlet weak var emptyMessageLabel: UILabel!
     
     
-    //Temporary hardcoded notes
-    var notes: [Note] = [
-        Note(title: "Buy groceries",
-             body: "Milk, Eggs, Bread, Butter, Fruits, and Vegetables.",
-             date: Date().addingTimeInterval(-3600)),
-        
-        Note(title: "Quick Idea",
-             body: "Launch a podcast for book summaries.",
-             date: Date().addingTimeInterval(-86400)),
-        
-        Note(title: "Workout Routine for the Next Three Months",
-             body: "Monday: Chest and Triceps, Tuesday: Back and Biceps, Wednesday: Legs, Thursday: Shoulders, Friday: Core. Add stretching sessions twice a week.",
-             date: Date().addingTimeInterval(-400000)),
-        
-        Note(title: "Read",
-             body: "Atomic Habits",
-             date: Date().addingTimeInterval(-7200)),
-        
-        Note(title: "UI Design Meeting Notes",
-             body: "Align on colors, spacing, component behavior. Review Figma mockups and ensure accessibility standards are met. Mobile-first layout preferred.",
-             date: Date().addingTimeInterval(-604800 * 2)),
-        
-        Note(title: "Travel Checklist",
-             body: "Passport, Visa, Chargers, Toiletries, Casual Wear, Formal Wear, Snacks, Travel Pillow, IDs, Currency, Cards, Hotel Bookings, COVID Certificate.",
-             date: Date().addingTimeInterval(-86000)),
-        
-        Note(title: "To Do",
-             body: "Wash car",
-             date: Date().addingTimeInterval(-300000)),
-        
-        Note(title: "Project Retrospective: Sprint 5",
-             body: "What went well: Team coordination. What didn't: Testing delays. Action items: Improve unit test coverage, communicate blockers sooner.",
-             date: Date().addingTimeInterval(-5400)),
-        
-        Note(title: "Short",
-             body: "Note.",
-             date: Date().addingTimeInterval(-100000)),
-        
-        Note(title: "Books I Want to Read in 2025",
-             body: "The Psychology of Money, Deep Work, Thinking Fast and Slow, The Almanack of Naval Ravikant, Sapiens, Hooked, The Lean Startup, 48 Laws of Power, Rework.",
-             date: Date().addingTimeInterval(-604800 * 3))
-    ]
+    //Notes from NoteIt CoreData
+    var notes: [Note] = [Note]()
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        if let storeURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
+//            print("Core Data store path: \(storeURL.path)")
+//        }
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -71,6 +38,46 @@ class NotesListViewController: UIViewController {
         //Style the Add Note("+") button
         addNoteButton.layer.cornerRadius = 25
         addNoteButton.clipsToBounds = true
+        
+        loadNotes()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateEmptyMessage()
+    }
+    
+    @IBAction func onAddNotePressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "goToNote", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToNote" {
+            if let destinationVC = segue.destination as? NoteDetailViewController {
+                destinationVC.context = self.context
+                destinationVC.delegate = self
+//                if let note = sender as? Note {
+//                    //Editing existing note
+//                    destinationVC.note = note
+//                } else {
+//                    //Adding new note
+//                    destinationVC.note = nil
+//                }
+            }
+        }
+    }
+    
+    func loadNotes(with request: NSFetchRequest<Note> = Note.fetchRequest()) {
+        do {
+            notes = try context.fetch(request)
+        } catch {
+            print("Error loading notes: \(error)")
+        }
+        collectionView.reloadData()
+    }
+    
+    func updateEmptyMessage() {
+        emptyMessageLabel.isHidden = !notes.isEmpty
     }
     
     func truncated(_ text: String, maxLength: Int) -> String {
@@ -79,7 +86,9 @@ class NotesListViewController: UIViewController {
             : text
     }
     
-    func formattedDate(_ date: Date) -> String {
+    func formattedDate(_ date: Date?) -> String {
+        guard let date = date else { return "" }
+        
         let calendar = Calendar.current
         let now = Date()
         
@@ -107,8 +116,8 @@ extension NotesListViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "noteCard", for: indexPath) as! NoteCollectionViewCell
         
         let note = notes[indexPath.row]
-        cell.titleLabel.text = truncated(note.title, maxLength: 30)
-        cell.bodyLabel.text = truncated(note.body, maxLength: 80)
+        cell.titleLabel.text = truncated(note.title!, maxLength: 30)
+        cell.bodyLabel.text = truncated(note.body!, maxLength: 80)
         cell.dateLabel.text = formattedDate(note.date)
         
         return cell
@@ -145,6 +154,14 @@ extension NotesListViewController: UICollectionViewDelegate {
             
             return UIMenu(title: "", children: [delete])
         }
+    }
+}
+
+//MARK: - NoteDetailViewControllerDelegate
+extension NotesListViewController: NoteDetailViewControllerDelegate {
+    func didSaveNote() {
+        print("About to reload data in UICollectionView")
+        loadNotes()
     }
 }
 

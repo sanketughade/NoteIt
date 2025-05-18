@@ -44,5 +44,4 @@ class NoteCollectionViewCell: UICollectionViewCell {
         dateLabel.textColor = .gray
         dateLabel.numberOfLines = 1
     }
-
 }
