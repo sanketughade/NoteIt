@@ -189,5 +189,32 @@ extension NotesListViewController: NoteDetailViewControllerDelegate {
     }
 }
 
+//MARK: - UISearchBarDelegate
+extension NotesListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request: NSFetchRequest<Note> = Note.fetchRequest()
+        
+        let titleSearchPredicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        let bodySearchPredicate = NSPredicate(format: "body CONTAINS[cd] %@", searchBar.text!)
+        
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [titleSearchPredicate, bodySearchPredicate])
+        
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true), NSSortDescriptor(key: "body", ascending: true)]
+        
+        loadNotes(with: request)
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadNotes()
+            
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
+}
+
 
 
