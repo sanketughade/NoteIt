@@ -39,6 +39,10 @@ class NotesListViewController: UIViewController {
         addNoteButton.layer.cornerRadius = 25
         addNoteButton.clipsToBounds = true
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+        
         loadNotes()
     }
     
@@ -65,6 +69,10 @@ class NotesListViewController: UIViewController {
 //                }
             }
         }
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     func loadNotes(with request: NSFetchRequest<Note> = Note.fetchRequest()) {
