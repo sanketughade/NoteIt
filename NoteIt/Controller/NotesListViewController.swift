@@ -200,7 +200,7 @@ extension NotesListViewController: UISearchBarDelegate {
         let titleSearchPredicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         let bodySearchPredicate = NSPredicate(format: "body CONTAINS[cd] %@", searchBar.text!)
         
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [titleSearchPredicate, bodySearchPredicate])
+        request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [titleSearchPredicate, bodySearchPredicate])
         
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true), NSSortDescriptor(key: "body", ascending: true)]
         
