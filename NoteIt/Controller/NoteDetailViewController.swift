@@ -19,6 +19,8 @@ class NoteDetailViewController: UIViewController {
     
     var delegate: NoteDetailViewControllerDelegate?
     
+    var noteToEdit: Note?
+    
     private var isEditingBody = false
     private var isNoteEdited = false
     
@@ -32,6 +34,12 @@ class NoteDetailViewController: UIViewController {
         textView.typingAttributes = [
             .font: UIFont.systemFont(ofSize: 22, weight: .bold)
         ]
+        
+        if let note = noteToEdit {
+            //Editing existing note
+            textView.attributedText = getAttributedText(for: note)
+            isNoteEdited = false
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -75,14 +83,21 @@ class NoteDetailViewController: UIViewController {
     func saveNote() {
         let fullText = textView.text ?? ""
         
-        if fullText == "" {
+        if fullText.isEmpty {
             navigationController?.popViewController(animated: true)
             return
         }
         
         let extractedTitleAndBody: (title: String, body: String) = extractTitleAndBody()
         
-        let note = Note(context: context)
+        let note: Note
+        if let existingNote = noteToEdit {
+            //Update the existing note
+            note = existingNote
+        } else {
+            //Create a new note
+            note = Note(context: context)
+        }
         note.title = extractedTitleAndBody.title
         note.body = extractedTitleAndBody.body
         note.date = Date()
@@ -109,6 +124,24 @@ class NoteDetailViewController: UIViewController {
             //No newline: all text is considered title, body is empty
             return (fullText, "")
         }
+    }
+    
+    func getAttributedText(for note: Note) -> NSMutableAttributedString {
+        let title = note.title ?? ""
+        let body = note.body ?? ""
+        
+        let fullText = "\(title)\n\(body)"
+        let attributedText = NSMutableAttributedString(string: fullText)
+        
+        //Apply bold to title(from 0 to title.count)
+        let titleRange = NSMakeRange(0, title.count)
+        attributedText.addAttribute(.font, value: UIFont.systemFont(ofSize: 22, weight: .bold), range: titleRange)
+        
+        //Apply normal font to body(from title.count+1 to end)
+        let bodyRange = NSMakeRange(title.count + 1, body.count) // +1 for the newline
+        attributedText.addAttribute(.font, value: UIFont.systemFont(ofSize: 16, weight: .regular), range: bodyRange)
+        
+        return attributedText
     }
 }
 

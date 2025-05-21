@@ -60,13 +60,10 @@ class NotesListViewController: UIViewController {
             if let destinationVC = segue.destination as? NoteDetailViewController {
                 destinationVC.context = self.context
                 destinationVC.delegate = self
-//                if let note = sender as? Note {
-//                    //Editing existing note
-//                    destinationVC.note = note
-//                } else {
-//                    //Adding new note
-//                    destinationVC.note = nil
-//                }
+                //Check if sender is a Note(editing)
+                if let selectedNote = sender as? Note {
+                    destinationVC.noteToEdit = selectedNote
+                }
             }
         }
     }
@@ -178,6 +175,12 @@ extension NotesListViewController: UICollectionViewDelegate {
             }
             return UIMenu(title: "", children: [delete])
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //Handle the tap on the note card
+        let selectedNote = notes[indexPath.row]
+        performSegue(withIdentifier: "goToNote", sender: selectedNote)
     }
 }
 
