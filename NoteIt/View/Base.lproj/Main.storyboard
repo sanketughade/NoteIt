@@ -85,7 +85,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="NoteIt" id="2Rt-pT-Cmk">
                         <rightBarButtonItems>
-                            <barButtonItem title="Item" image="trash" catalog="system" id="228-RR-Cr3"/>
+                            <barButtonItem title="Item" image="trash" catalog="system" id="228-RR-Cr3">
+                                <connections>
+                                    <action selector="deleteMultiplePressed:" destination="BYZ-38-t0r" id="f0T-gb-Xq3"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem image="checkmark.circle" catalog="system" id="TXI-na-pHR">
                                 <connections>
                                     <action selector="onSelectAllPressed:" destination="BYZ-38-t0r" id="0WU-6x-LcF"/>

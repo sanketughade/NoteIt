@@ -76,7 +76,7 @@ class NotesListViewController: UIViewController {
         performSegue(withIdentifier: "goToNote", sender: nil)
     }
     
-    @IBAction func onSelectAllPressed(_ sender: Any) {
+    @IBAction func onSelectAllPressed(_ sender: UIBarButtonItem) {
         isAllSelected.toggle()
         if isAllSelected {
             selectAllButton.image = UIImage(systemName: "checkmark.circle.fill")
@@ -87,6 +87,25 @@ class NotesListViewController: UIViewController {
             allNotesUnselected()
         }
         
+    }
+    
+    @IBAction func deleteMultiplePressed(_ sender: UIBarButtonItem) {
+        guard !selectedNotes.isEmpty else { return }
+        
+        for note in selectedNotes {
+            if let context = note.managedObjectContext {
+                context.delete(note)
+            }
+        }
+        
+        do {
+            try context.save()
+            notes.removeAll(where: { selectedNotes.contains($0) })
+            allNotesUnselected()
+            updateEmptyMessage()
+        } catch {
+            print("Failed to delete selected notes \(error)")
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
