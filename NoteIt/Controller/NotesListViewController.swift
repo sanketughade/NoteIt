@@ -12,6 +12,8 @@ class NotesListViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var addNoteButton: UIButton!
     @IBOutlet weak var emptyMessageLabel: UILabel!
+    @IBOutlet weak var selectAllButton: UIBarButtonItem!
+    @IBOutlet weak var deleteMultipleButton: UIBarButtonItem!
     
     
     //Notes from NoteIt CoreData
@@ -20,6 +22,8 @@ class NotesListViewController: UIViewController {
     
     var isSelectionModeEnabled = false
     var selectedNotes = Set<Note>()
+    
+    var isAllSelected = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +50,21 @@ class NotesListViewController: UIViewController {
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
+        //Initially keep selectAllButton and deleteAllButton button hidden. Show them only when the Note Card is selected
+        selectAllButton.isHidden = true
+        deleteMultipleButton.isHidden = true
+        
         loadNotes()
+    }
+    
+    func allNotesUnselected() {
+        isSelectionModeEnabled = false
+        //As no note card is selected, hide both the buttons again
+        selectAllButton.isHidden = true
+        deleteMultipleButton.isHidden = true
+        selectAllButton.image = UIImage(systemName: "checkmark.circle")
+        selectedNotes.removeAll()
+        collectionView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +74,19 @@ class NotesListViewController: UIViewController {
     
     @IBAction func onAddNotePressed(_ sender: UIButton) {
         performSegue(withIdentifier: "goToNote", sender: nil)
+    }
+    
+    @IBAction func onSelectAllPressed(_ sender: Any) {
+        isAllSelected.toggle()
+        if isAllSelected {
+            selectAllButton.image = UIImage(systemName: "checkmark.circle.fill")
+            selectedNotes = Set(notes)
+            collectionView.reloadData()
+        } else {
+            //Select All unselected, so unselect all notes and hide the selectAll and deleteAll buttons
+            allNotesUnselected()
+        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -191,6 +222,9 @@ extension NotesListViewController: UICollectionViewDelegate {
                 self.isSelectionModeEnabled = true
                 self.selectedNotes.insert(self.notes[indexPath.item])
                 collectionView.reloadData()
+                //As the user has selected the note card, show the selecteAll and deleteAll buttons
+                self.selectAllButton.isHidden = false
+                self.deleteMultipleButton.isHidden = false
             }
             return UIMenu(title: "", children: [selectAction, deleteAction])
         }
@@ -203,12 +237,22 @@ extension NotesListViewController: UICollectionViewDelegate {
             if selectedNotes.contains(note) {
                 selectedNotes.remove(note)
                 if (selectedNotes.count == 0) {
-                    self.isSelectionModeEnabled = false
-                    collectionView.reloadData()
+                    allNotesUnselected()
                     return
+                } else {
+                    if isAllSelected {
+                        //User had selected all cards but now has unselected one of the card so change the selectAllButton image to "checkmark.circle"
+                        isAllSelected = false
+                        selectAllButton.image = UIImage(systemName: "checkmark.circle")
+                    }
                 }
             } else {
                 selectedNotes.insert(note)
+                if (selectedNotes.count == notes.count) {
+                    //User has manually selected all notes to turn the allSelected image to "checkmark.circle.fill"
+                    isAllSelected = true
+                    selectAllButton.image = UIImage(systemName: "checkmark.circle.fill")
+                }
             }
             collectionView.reloadItems(at: [indexPath])
         } else {

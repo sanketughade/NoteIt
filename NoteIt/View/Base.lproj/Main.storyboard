@@ -83,11 +83,22 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="lhd-FH-NoI" secondAttribute="bottom" constant="24" id="v2L-sW-Znw"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="NoteIt" id="2Rt-pT-Cmk"/>
+                    <navigationItem key="navigationItem" title="NoteIt" id="2Rt-pT-Cmk">
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" image="trash" catalog="system" id="228-RR-Cr3"/>
+                            <barButtonItem image="checkmark.circle" catalog="system" id="TXI-na-pHR">
+                                <connections>
+                                    <action selector="onSelectAllPressed:" destination="BYZ-38-t0r" id="0WU-6x-LcF"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <outlet property="addNoteButton" destination="lhd-FH-NoI" id="MyB-GN-b2N"/>
                         <outlet property="collectionView" destination="Yis-BM-TZl" id="xk3-j0-GWJ"/>
+                        <outlet property="deleteMultipleButton" destination="228-RR-Cr3" id="zPV-vI-EIN"/>
                         <outlet property="emptyMessageLabel" destination="nhy-vb-tEu" id="NdI-HC-csJ"/>
+                        <outlet property="selectAllButton" destination="TXI-na-pHR" id="KFz-IN-Pib"/>
                         <segue destination="JS3-oc-26h" kind="show" identifier="goToNote" id="3wP-W9-Fs8"/>
                     </connections>
                 </viewController>
@@ -161,8 +172,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="checkmark.circle" catalog="system" width="128" height="123"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="trash" catalog="system" width="117" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
