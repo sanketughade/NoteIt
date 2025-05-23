@@ -11,6 +11,7 @@ class NoteCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var bodyLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var checkboxImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,5 +44,13 @@ class NoteCollectionViewCell: UICollectionViewCell {
         dateLabel.font = UIFont.systemFont(ofSize: 13, weight: .light)
         dateLabel.textColor = .gray
         dateLabel.numberOfLines = 1
+        
+        checkboxImageView.layer.cornerRadius = 12
+        checkboxImageView.clipsToBounds = true
+    }
+    
+    func configureCheckbox(with note: Note, isSelectionMode: Bool, isSelected: Bool) {
+        checkboxImageView.isHidden = !isSelectionMode
+        checkboxImageView.alpha = isSelected ? 1.0 : 0.3
     }
 }

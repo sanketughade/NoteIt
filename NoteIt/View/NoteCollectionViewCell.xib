@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -34,14 +35,24 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="T43-KH-byR">
+                        <rect key="frame" x="118" y="118.66666666666667" width="24" height="22.666666666666671"/>
+                        <color key="tintColor" systemColor="systemBlueColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="FIf-Cx-MFF"/>
+                            <constraint firstAttribute="width" constant="24" id="TtV-gO-rDt"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="LkP-og-RRw" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="12" id="0lw-Ta-TPw"/>
+                <constraint firstAttribute="trailing" secondItem="T43-KH-byR" secondAttribute="trailing" constant="8" id="44M-xI-ZHC"/>
                 <constraint firstItem="LzM-an-a2j" firstAttribute="top" secondItem="LkP-og-RRw" secondAttribute="bottom" constant="4" id="Cgf-QO-awT"/>
                 <constraint firstItem="LzM-an-a2j" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="12" id="FTk-Tn-241"/>
                 <constraint firstAttribute="bottom" secondItem="LzM-an-a2j" secondAttribute="bottom" constant="8" id="Fsm-BM-2it"/>
+                <constraint firstAttribute="bottom" secondItem="T43-KH-byR" secondAttribute="bottom" constant="8" id="R7n-OK-Nsr"/>
                 <constraint firstItem="ASl-kF-HIJ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="RGJ-g2-omv"/>
                 <constraint firstAttribute="trailing" secondItem="LzM-an-a2j" secondAttribute="trailing" constant="12" id="kPM-fJ-nwy"/>
                 <constraint firstAttribute="trailing" secondItem="LkP-og-RRw" secondAttribute="trailing" constant="12" id="mzu-he-35h"/>
@@ -51,10 +62,17 @@
             </constraints>
             <connections>
                 <outlet property="bodyLabel" destination="LkP-og-RRw" id="l5p-Mk-IVC"/>
+                <outlet property="checkboxImageView" destination="T43-KH-byR" id="VAL-Lf-RbR"/>
                 <outlet property="dateLabel" destination="LzM-an-a2j" id="xBT-jd-lkM"/>
                 <outlet property="titleLabel" destination="ASl-kF-HIJ" id="rej-SJ-RTm"/>
             </connections>
             <point key="canvasLocation" x="120.61068702290076" y="-11.267605633802818"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

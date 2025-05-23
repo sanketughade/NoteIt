@@ -17,6 +17,9 @@ class NotesListViewController: UIViewController {
     //Notes from NoteIt CoreData
     var notes: [Note] = [Note]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    var isSelectionModeEnabled = false
+    var selectedNotes = Set<Note>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,7 +84,8 @@ class NotesListViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    func updateEmptyMessage() {
+    func updateEmptyMessage(emptyMessage: String = "No notes yet") {
+        emptyMessageLabel.text = emptyMessage
         emptyMessageLabel.isHidden = !notes.isEmpty
     }
     
@@ -125,6 +129,9 @@ extension NotesListViewController: UICollectionViewDataSource {
         cell.bodyLabel.text = truncated(note.body!, maxLength: 80)
         cell.dateLabel.text = formattedDate(note.date)
         
+        let isSelected = selectedNotes.contains(note)
+        cell.configureCheckbox(with: note, isSelectionMode: isSelectionModeEnabled, isSelected: isSelected)
+        
         return cell
     }
 }
@@ -152,7 +159,8 @@ extension NotesListViewController: UICollectionViewDelegateFlowLayout {
 extension NotesListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: indexPath as NSCopying, previewProvider: nil) { _ in
-            let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
+            //Delete action
+            let deleteAction = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
                 let noteToDelete = self.notes[indexPath.item]
                 
                 //1. Delete from Core Data context
@@ -173,14 +181,41 @@ extension NotesListViewController: UICollectionViewDelegate {
                     }
                 }
             }
-            return UIMenu(title: "", children: [delete])
+            
+            //Select action
+            let selectAction = UIAction(
+                title: "Select",
+                image: UIImage(systemName: "checkmark.circle")
+            ) {_ in
+                //Enter selection mode
+                self.isSelectionModeEnabled = true
+                self.selectedNotes.insert(self.notes[indexPath.item])
+                collectionView.reloadData()
+            }
+            return UIMenu(title: "", children: [selectAction, deleteAction])
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //Handle the tap on the note card
-        let selectedNote = notes[indexPath.row]
-        performSegue(withIdentifier: "goToNote", sender: selectedNote)
+        if (isSelectionModeEnabled) {
+            let note = notes[indexPath.item]
+            
+            if selectedNotes.contains(note) {
+                selectedNotes.remove(note)
+                if (selectedNotes.count == 0) {
+                    self.isSelectionModeEnabled = false
+                    collectionView.reloadData()
+                    return
+                }
+            } else {
+                selectedNotes.insert(note)
+            }
+            collectionView.reloadItems(at: [indexPath])
+        } else {
+            //Handle the tap on the note card
+            let selectedNote = notes[indexPath.row]
+            performSegue(withIdentifier: "goToNote", sender: selectedNote)
+        }
     }
 }
 
